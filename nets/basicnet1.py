@@ -4,11 +4,6 @@ import math
 
 
 class basicnet(nn.Module):
-    '''
-    减少卷基层的层数，采用avepooling
-    采用9层结构
-    '''
-
     def __init__(self, features):
         super(basicnet, self).__init__()
         self.features = features
@@ -19,7 +14,7 @@ class basicnet(nn.Module):
             nn.Dropout(),
             nn.Linear(4096, 4096),
             nn.ReLU(True),
-            nn.Linear(4096, 32),  # hash码位数
+            nn.Linear(4096, 32), 
         )
 
         # Initialize weights
@@ -31,9 +26,9 @@ class basicnet(nn.Module):
 
     def forward(self, x):
         x = self.features(x)
-        x = x.view(x.size(0), -1)  # 对齐最高维，即一个batch内的图像数目
+        x = x.view(x.size(0), -1) 
         x = self.fc(x)
-        x = F.tanh(x)  # 转化到tanh，-1到1之间
+        x = F.tanh(x)
         return x
 
 
